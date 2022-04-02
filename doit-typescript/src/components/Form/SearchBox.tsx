@@ -1,44 +1,51 @@
-import { Flex, Center, Button } from '@chakra-ui/react'
+import { Flex, Center, Button, useDisclosure } from '@chakra-ui/react'
 import { FaSearch } from 'react-icons/fa'
 import { Input } from './input'
 import { theme } from '../../styles/theme'
+import ModalCreateTask from '../Modal/ModalCreateTask'
 
 export const SearchBox = () => {
+  const { isOpen, onClose, onOpen } = useDisclosure()
+
   return (
-    <Flex
-      mt='6'
-      w='100%'
-      padding={['4', '8']}
-      paddingY='2'
-      paddingBottom='6'
-      borderBottomWidth='1px'
-      borderColor='gray.50'
-    >
-      <Flex as='form'>
-        <Input placeholder='Pesquisar por tarefa' w='35vw' name='title' />
-        <Center
-          borderRadius='8px'
-          as='button'
-          ml='2'
-          w='64px'
-          h='60px'
-          fontSize='2xl'
-          bg='purple.600'
-        >
-          <FaSearch color={theme.colors.white} />
-        </Center>
-      </Flex>
-      <Button
-        bg='purple.500'
-        color='white'
-        paddingX='16'
-        ml='4'
-        h='60px'
-        borderRadius='8px'
-        _hover={{ bg: 'purple.600' }}
+    <>
+      <ModalCreateTask isOpen={isOpen} onClose={onClose} />
+      <Flex
+        mt='6'
+        w='100%'
+        padding={['4', '8']}
+        paddingY='2'
+        paddingBottom='6'
+        borderBottomWidth='1px'
+        borderColor='gray.50'
       >
-        Adicionar uma nova tarefa
-      </Button>
-    </Flex>
+        <Flex as='form'>
+          <Input placeholder='Pesquisar por tarefa' w='35vw' name='title' />
+          <Center
+            borderRadius='8px'
+            as='button'
+            ml='2'
+            w='64px'
+            h='60px'
+            fontSize='2xl'
+            bg='purple.600'
+          >
+            <FaSearch color={theme.colors.white} />
+          </Center>
+        </Flex>
+        <Button
+          bg='purple.500'
+          color='white'
+          paddingX='16'
+          ml='4'
+          h='60px'
+          onClick={onOpen}
+          borderRadius='8px'
+          _hover={{ bg: 'purple.600' }}
+        >
+          Adicionar uma nova tarefa
+        </Button>
+      </Flex>
+    </>
   )
 }
