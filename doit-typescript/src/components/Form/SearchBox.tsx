@@ -3,9 +3,24 @@ import { FaSearch } from 'react-icons/fa'
 import { Input } from './input'
 import { theme } from '../../styles/theme'
 import ModalCreateTask from '../Modal/ModalCreateTask'
+import { useForm } from 'react-hook-form'
+import { useTasks } from '../../contexts/TasksContext'
+import { useAuth } from '../../contexts/AuthContext'
+
+interface SearchData {
+  title: string
+}
 
 export const SearchBox = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
+  const { searchTask } = useTasks()
+  const { accessToken } = useAuth()
+
+  const handleSearch = ({ title }: SearchData) => {
+    searchTask(title, accessToken)
+  }
+
+  const { register, handleSubmit } = useForm<SearchData>()
 
   return (
     <>
@@ -18,9 +33,14 @@ export const SearchBox = () => {
         paddingBottom='6'
         borderBottomWidth='1px'
         borderColor='gray.50'
+        flexDir={['column', 'column', 'row', 'row']}
       >
-        <Flex as='form'>
-          <Input placeholder='Pesquisar por tarefa' w='35vw' name='title' />
+        <Flex as='form' onSubmit={handleSubmit(handleSearch)}>
+          <Input
+            placeholder='Pesquisar por tarefa'
+            w={['100%', '100%', '35vw']}
+            {...register('title')}
+          />
           <Center
             borderRadius='8px'
             as='button'
@@ -37,7 +57,8 @@ export const SearchBox = () => {
           bg='purple.500'
           color='white'
           paddingX='16'
-          ml='4'
+          ml={['0', '0', '4']}
+          mt={['4', '4', '0']}
           h='60px'
           onClick={onOpen}
           borderRadius='8px'
