@@ -75,7 +75,7 @@ export const Card = ({ task, onClick }: CardProps) => {
           value={task.completed ? 100 : 10}
         />
         <Text color='gray.200' mt='3'>
-          07 March 2021
+          07 March 2022
         </Text>
       </Box>
     </Box>
